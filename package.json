@@ -4,5 +4,8 @@
   "description": "8base CLI",
   "author": "8base",
   "license": "MIT",
-  "types": "index.d.ts"
+  "types": "index.d.ts",
+  "scripts": {
+    "postversion": "git push --follow-tags"
+  }
 }
