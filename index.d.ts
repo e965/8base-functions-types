@@ -24,7 +24,7 @@ export type FunctionEvent<Data = {}, OriginalObject = {}, ExtendObject = {}, Err
   data: Data;
   originalObject: OriginalObject;
   errors: Error[];
-  body?: string;
+  body: string;
   headers: { [key: string]: string | undefined };
 } & ExtendObject;
 
