@@ -1,0 +1,8 @@
+{
+  "name": "8base-cli-types",
+  "version": "0.0.99",
+  "description": "8base CLI",
+  "author": "8base",
+  "license": "MIT",
+  "types": "index.d.ts"
+}
