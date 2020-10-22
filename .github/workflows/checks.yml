@@ -19,5 +19,8 @@ jobs:
         with:
           node-version: 11
 
+      - name: Install
+        run: yarn
+
       - name: Check Types
         run: yarn typecheck
