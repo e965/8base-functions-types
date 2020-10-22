@@ -35,4 +35,4 @@ export type FunctionResult<Data = {}, OriginalObject = {}, ExtendObject = {}, Er
     errors?: Error[];
     body?: string;
   } & ExtendObject
-  >;
+>;
