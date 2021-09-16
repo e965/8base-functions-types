@@ -12,6 +12,7 @@ export type GqlRequest = <Result = {}, Variables = {}>(
 export type FunctionContext = {
   api: {
     gqlRequest: GqlRequest;
+    url: string;
   };
   invokeFunction: <Result = {}, Args = {}>(
     name: string,
