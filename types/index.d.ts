@@ -14,7 +14,7 @@ export type FunctionContext = {
   api: {
     gqlRequest: GqlRequest;
   };
-  invokeFunction: <Result = {}, Args = {}>(
+  invokeFunction: <Result extends InvokeFunctionResult = InvokeFunctionResult, Args = {}>(
     name: string,
     args?: Args,
     options?: { waitForResponse: boolean; checkPermissions?: boolean }
@@ -22,6 +22,12 @@ export type FunctionContext = {
   workspaceId: string;
   environmentId: string;
   environmentName: string;
+};
+
+export type InvokeFunctionResult<ResultT = any> = {
+  result?: ResultT;
+  error?: string;
+  completed?: boolean;
 };
 
 export type FunctionEvent<
