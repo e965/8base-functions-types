@@ -1,8 +1,7 @@
 import { DocumentNode } from 'graphql';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
-import Dict = NodeJS.Dict;
 
-export type GqlRequest = <Result = Dict<any>, Variables = Dict<any>>(
+export type GqlRequest = <Result = Record<string, any>, Variables = Record<string, any>>(
   gqlTag: DocumentNode | TypedDocumentNode<Result, Variables>,
   variables?: Variables,
   options?: {
@@ -15,7 +14,7 @@ export type FunctionContext = {
   api: {
     gqlRequest: GqlRequest;
   };
-  invokeFunction: <Result extends InvokeFunctionResult = InvokeFunctionResult, Args = Dict<any>>(
+  invokeFunction: <Result extends InvokeFunctionResult = InvokeFunctionResult, Args = Record<string, any>>(
     name: string,
     args?: Args,
     options?: { waitForResponse: boolean; checkPermissions?: boolean }
@@ -31,7 +30,12 @@ export type InvokeFunctionResult<ResultT = any> = {
   completed?: boolean;
 };
 
-export type FunctionEvent<Data = Dict<any>, OriginalObject = Dict<any>, ExtendObject = Dict<any>, Error = Dict<any>> = {
+export type FunctionEvent<
+  Data = Record<string, any>,
+  OriginalObject = Record<string, any>,
+  ExtendObject = Record<string, any>,
+  Error = Record<string, any>
+  > = {
   data: Data;
   originalObject: OriginalObject;
   errors: Error[];
@@ -40,10 +44,10 @@ export type FunctionEvent<Data = Dict<any>, OriginalObject = Dict<any>, ExtendOb
 } & ExtendObject;
 
 export type FunctionResult<
-  Data = Dict<any>,
-  OriginalObject = Dict<any>,
-  ExtendObject = Dict<any>,
-  Error = Dict<any>
+  Data = Record<string, any>,
+  OriginalObject = Record<string, any>,
+  ExtendObject = Record<string, any>,
+  Error = Record<string, any>
   > = Promise<
   {
     data?: Data;
