@@ -1,5 +1,5 @@
-import { DocumentNode } from 'graphql';
-import { TypedDocumentNode } from '@graphql-typed-document-node/core';
+import { DocumentNode } from "graphql";
+import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
 export type GqlRequest = <Result = Record<string, any>, Variables = Record<string, any>>(
   query: DocumentNode | TypedDocumentNode<Result, Variables>,
