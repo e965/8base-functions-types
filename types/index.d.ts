@@ -2,7 +2,7 @@ import { DocumentNode } from 'graphql';
 import { TypedDocumentNode } from '@graphql-typed-document-node/core';
 
 export type GqlRequest = <Result = Record<string, any>, Variables = Record<string, any>>(
-  gqlTag: DocumentNode | TypedDocumentNode<Result, Variables>,
+  query: DocumentNode | TypedDocumentNode<Result, Variables>,
   variables?: Variables,
   options?: {
     checkPermissions?: boolean;
@@ -24,10 +24,10 @@ export type FunctionContext = {
   environmentName: string;
 };
 
-export type InvokeFunctionResult<ResultT = any> = {
-  result?: ResultT;
+export type InvokeFunctionResult<Result = any> = {
+  completed: boolean;
+  result?: Result;
   error?: string;
-  completed?: boolean;
 };
 
 export type FunctionEvent<
@@ -35,7 +35,7 @@ export type FunctionEvent<
   OriginalObject = Record<string, any>,
   ExtendObject = Record<string, any>,
   Error = Record<string, any>
-  > = {
+> = {
   data: Data;
   originalObject: OriginalObject;
   errors: Error[];
@@ -48,11 +48,15 @@ export type FunctionResult<
   OriginalObject = Record<string, any>,
   ExtendObject = Record<string, any>,
   Error = Record<string, any>
-  > = Promise<
-  {
-    data?: Data;
-    originalObject?: OriginalObject;
-    errors?: Error[];
-    body?: string;
-  } & ExtendObject
-  >;
+> = Promise<FunctionResultObject<Data, OriginalObject, Error> & ExtendObject>;
+
+export type FunctionResultObject<
+  Data = Record<string, any>,
+  OriginalObject = Record<string, any>,
+  Error = Record<string, any>
+> = {
+  data?: Data;
+  originalObject?: OriginalObject;
+  errors?: Error[];
+  body?: string;
+};
