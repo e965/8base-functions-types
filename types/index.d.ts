@@ -73,57 +73,57 @@ export type BeforeCreateTriggerFunctionEvent<
 export type BeforeUpdateTriggerFunctionEvent<
   DataT = Record<string, any>,
   FilterT = Record<string, any>,
-  OriginalObjectT = { id: string } & Record<string, any>,
+  OriginalObjectT = Record<string, any>,
   ExtendObjectT = Record<string, any>
 > = {
   data: DataT;
   filter: FilterT;
-  originalObject: OriginalObjectT;
+  originalObject: OriginalObjectT & { id: string };
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
 export type BeforeDeleteTriggerFunctionEvent<
   FilterT = Record<string, any>,
-  OriginalObjectT = { id: string } & Record<string, any>,
+  OriginalObjectT = Record<string, any>,
   ExtendObjectT = Record<string, any>
 > = {
   filter: FilterT;
-  originalObject: OriginalObjectT;
+  originalObject: OriginalObjectT & { id: string };
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
 export type AfterCreateTriggerFunctionEvent<
-  DataT = { id: string } & Record<string, any>,
+  DataT = Record<string, any>,
   OriginalDataT = Record<string, any>,
   ExtendObjectT = Record<string, any>
 > = {
-  data: DataT;
+  data: DataT & { id: string };
   originalData: OriginalDataT;
   body: string;
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
 export type AfterUpdateTriggerFunctionEvent<
-  DataT = { id: string } & Record<string, any>,
+  DataT = Record<string, any>,
   OriginalDataT = Record<string, any>,
-  OriginalObjectT = { id: string } & Record<string, any>,
+  OriginalObjectT = Record<string, any>,
   ExtendObjectT = Record<string, any>
 > = {
-  data: DataT;
+  data: DataT & { id: string };
   originalData: OriginalDataT;
-  originalObject: OriginalObjectT;
+  originalObject: OriginalObjectT & { id: string };
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
 export type AfterDeleteTriggerFunctionEvent<
-  DataT = { id: string } & Record<string, any>,
+  DataT = Record<string, any>,
   OriginalDataT = Record<string, any>,
-  OriginalObjectT = { id: string } & Record<string, any>,
+  OriginalObjectT = Record<string, any>,
   ExtendObjectT = Record<string, any>
 > = {
-  data: DataT;
+  data: DataT & { id: string };
   originalData: OriginalDataT;
-  originalObject: OriginalObjectT;
+  originalObject: OriginalObjectT & { id: string };
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
