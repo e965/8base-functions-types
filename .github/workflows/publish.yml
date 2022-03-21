@@ -22,7 +22,7 @@ jobs:
         run: yarn typecheck
 
       - name: Publish
-        run: npm publish
+        run: npm publish --access public
 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_ORG }}
