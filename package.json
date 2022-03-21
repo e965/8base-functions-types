@@ -1,9 +1,10 @@
 {
-  "name": "8base-cli-types",
-  "version": "0.3.3",
-  "description": "8base CLI",
+  "name": "@8base/functions-types",
+  "version": "1.0.0",
+  "description": "Types for 8base Custom Functions",
   "author": "8base",
   "license": "MIT",
+  "repository": "https://github.com/8base/functions-types",
   "types": "types/index.d.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
