@@ -49,7 +49,7 @@ export type FunctionResponse<
   DataT = Record<string, any>,
   ExtendObjectT = Record<string, any>,
   ErrorT = Record<string, any>
-> = Promise<(FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void>;
+> = (FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void;
 
 export type FunctionResponseObject<
   DataT = Record<string, any>,
@@ -99,7 +99,6 @@ export type AfterCreateTriggerFunctionEvent<
 > = {
   data: DataT & { id: string };
   originalData: OriginalDataT;
-  body: string;
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
 
