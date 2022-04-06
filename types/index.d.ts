@@ -30,12 +30,6 @@ export type FunctionContext = {
   environmentName: string;
 };
 
-export type InvokeFunctionResponse<ResultT = any> = {
-  completed: boolean;
-  result?: ResultT;
-  error?: string;
-};
-
 export type FunctionEvent<
   DataT = Record<string, any>,
   ExtendObjectT = Record<string, any>
@@ -44,23 +38,6 @@ export type FunctionEvent<
   body: string;
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
-
-export type FunctionResponse<
-  DataT = Record<string, any>,
-  ExtendObjectT = Record<string, any>,
-  ErrorT = Record<string, any>
-> = (FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void;
-
-export type FunctionResponseObject<
-  DataT = Record<string, any>,
-  ErrorT = Record<string, any>
-> = {
-  data?: DataT;
-  errors?: ErrorT[];
-};
-
-export type TriggerResponse<DataT = Record<string, any>> =
-  FunctionResponseObject<DataT>;
 
 export type BeforeCreateTriggerFunctionEvent<
   DataT = Record<string, any>,
@@ -125,6 +102,31 @@ export type AfterDeleteTriggerFunctionEvent<
   originalObject: OriginalObjectT & { id: string };
   headers: Record<string, string | undefined>;
 } & ExtendObjectT;
+
+export type InvokeFunctionResponse<ResultT = any> = {
+  completed: boolean;
+  result?: ResultT;
+  error?: string;
+};
+
+export type FunctionResponseObject<
+  DataT = Record<string, any>,
+  ErrorT = Record<string, any>
+> = {
+  data?: DataT;
+  errors?: ErrorT[];
+};
+
+export type FunctionResponse<
+  DataT = Record<string, any>,
+  ErrorT = Record<string, any>,
+  ExtendObjectT = Record<string, any>
+> = (FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void;
+
+export type TriggerResponse<
+  DataT = Record<string, any>,
+  ErrorT = Record<string, any>
+> = FunctionResponseObject<DataT, ErrorT>;
 
 export type WebhookResponse = {
   statusCode: number;
