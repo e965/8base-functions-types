@@ -1,15 +1,31 @@
 import { DocumentNode } from "graphql";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
+export type AnyObject = Record<string, any>;
+
+export type HttpHeaders = Record<string, string | undefined>;
+
+export interface IDBObject {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: number;
+  createdById: string | null;
+}
+
+export interface IKeyFilter {
+  id: string;
+}
+
 export type GqlRequest = <
-  ResultT = Record<string, any>,
-  VariablesT = Record<string, any>
+  ResultT = AnyObject,
+  VariablesT = AnyObject
 >(
   query: DocumentNode | TypedDocumentNode<ResultT, VariablesT>,
   variables?: VariablesT,
   options?: {
     checkPermissions?: boolean;
-    headers?: Record<string, any>;
+    headers?: HttpHeaders;
   }
 ) => Promise<ResultT>;
 
@@ -19,7 +35,7 @@ export type FunctionContext = {
   };
   invokeFunction: <
     ResponseT extends InvokeFunctionResponse = InvokeFunctionResponse,
-    ArgsT = Record<string, any>
+    ArgsT = AnyObject
   >(
     name: string,
     args?: ArgsT,
@@ -31,77 +47,71 @@ export type FunctionContext = {
 };
 
 export type FunctionEvent<
-  DataT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  ExtendObjectT = AnyObject
 > = {
   data: DataT;
   body: string;
-  headers: Record<string, string | undefined>;
+  headers: HttpHeaders;
 } & ExtendObjectT;
 
 export type BeforeCreateTriggerFunctionEvent<
-  DataT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject
 > = {
   data: DataT;
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  headers: HttpHeaders;
+};
 
 export type BeforeUpdateTriggerFunctionEvent<
-  DataT = Record<string, any>,
-  FilterT = Record<string, any>,
-  OriginalObjectT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  FilterT = AnyObject,
+  OriginalObjectT = AnyObject
 > = {
   data: DataT;
-  filter: FilterT;
-  originalObject: OriginalObjectT & { id: string };
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  filter: FilterT & IKeyFilter;
+  originalObject: OriginalObjectT & IDBObject;
+  headers: HttpHeaders;
+};
 
 export type BeforeDeleteTriggerFunctionEvent<
-  FilterT = Record<string, any>,
-  OriginalObjectT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  FilterT = AnyObject,
+  OriginalObjectT = AnyObject
 > = {
-  filter: FilterT;
-  originalObject: OriginalObjectT & { id: string };
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  filter: FilterT & IKeyFilter;
+  originalObject: OriginalObjectT & IDBObject;
+  headers: HttpHeaders;
+};
 
 export type AfterCreateTriggerFunctionEvent<
-  DataT = Record<string, any>,
-  OriginalDataT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  OriginalDataT = DataT
 > = {
-  data: DataT & { id: string };
+  data: DataT & IDBObject;
   originalData: OriginalDataT;
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  headers: HttpHeaders;
+};
 
 export type AfterUpdateTriggerFunctionEvent<
-  DataT = Record<string, any>,
-  OriginalDataT = Record<string, any>,
-  OriginalObjectT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  OriginalDataT = AnyObject,
+  OriginalObjectT = AnyObject
 > = {
-  data: DataT & { id: string };
+  data: DataT & IDBObject;
   originalData: OriginalDataT;
-  originalObject: OriginalObjectT & { id: string };
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  originalObject: OriginalObjectT & IDBObject;
+  headers: HttpHeaders;
+};
 
 export type AfterDeleteTriggerFunctionEvent<
-  DataT = Record<string, any>,
-  OriginalDataT = Record<string, any>,
-  OriginalObjectT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  OriginalDataT = AnyObject,
+  OriginalObjectT = AnyObject
 > = {
-  data: DataT & { id: string };
+  data: DataT & IDBObject;
   originalData: OriginalDataT;
-  originalObject: OriginalObjectT & { id: string };
-  headers: Record<string, string | undefined>;
-} & ExtendObjectT;
+  originalObject: OriginalObjectT & IDBObject;
+  headers: HttpHeaders;
+};
 
 export type InvokeFunctionResponse<ResultT = any> = {
   completed: boolean;
@@ -110,22 +120,22 @@ export type InvokeFunctionResponse<ResultT = any> = {
 };
 
 export type FunctionResponseObject<
-  DataT = Record<string, any>,
-  ErrorT = Record<string, any>
+  DataT = AnyObject,
+  ErrorT = AnyObject
 > = {
   data?: DataT;
   errors?: ErrorT[];
 };
 
 export type FunctionResponse<
-  DataT = Record<string, any>,
-  ErrorT = Record<string, any>,
-  ExtendObjectT = Record<string, any>
+  DataT = AnyObject,
+  ErrorT = AnyObject,
+  ExtendObjectT = AnyObject
 > = (FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void;
 
 export type TriggerResponse<
-  DataT = Record<string, any>,
-  ErrorT = Record<string, any>
+  DataT = AnyObject,
+  ErrorT = AnyObject
 > = FunctionResponseObject<DataT, ErrorT>;
 
 export type WebhookResponse = {
