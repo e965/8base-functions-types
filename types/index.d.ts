@@ -14,7 +14,7 @@ export interface IDBObject {
 }
 
 export interface IKeyFilter {
-  id: string;
+  id?: string;
 }
 
 export type GqlRequest = <
