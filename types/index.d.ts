@@ -21,7 +21,7 @@ export type GqlRequest = <
   ResultT = AnyObject,
   VariablesT = AnyObject
 >(
-  query: DocumentNode | TypedDocumentNode<ResultT, VariablesT>,
+  query: string | DocumentNode | TypedDocumentNode<ResultT, VariablesT>,
   variables?: VariablesT,
   options?: {
     checkPermissions?: boolean;
