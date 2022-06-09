@@ -55,6 +55,8 @@ export type FunctionEvent<
   headers: HttpHeaders;
 } & ExtendObjectT;
 
+export type FunctionEventArgs<ArgsT = AnyObject> = { data: ArgsT };
+
 export type BeforeCreateTriggerFunctionEvent<
   DataT = AnyObject
 > = {
