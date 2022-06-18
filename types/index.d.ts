@@ -137,10 +137,15 @@ export type FunctionResponse<
 
 export type TriggerResponse<
   DataT = AnyObject,
-  ErrorT = AnyObject
+  ErrorT = TriggerError
 > = FunctionResponseObject<DataT, ErrorT>;
 
 export type WebhookResponse = {
   statusCode: number;
   body?: string;
+};
+
+export type TriggerError = {
+  code: string;
+  message: string;
 };
