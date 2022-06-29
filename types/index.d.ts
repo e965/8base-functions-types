@@ -2,6 +2,7 @@ import { DocumentNode } from "graphql";
 import { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
 export type AnyObject = Record<string, any>;
+export type Maybe<T> = T | null;
 
 export type HttpHeaders = Record<string, string | undefined>;
 
@@ -44,6 +45,7 @@ export type FunctionContext = {
   workspaceId: string;
   environmentId: string;
   environmentName: string;
+  userId: Maybe<string>;
 };
 
 export type FunctionEvent<
