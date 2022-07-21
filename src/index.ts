@@ -1,5 +1,5 @@
-import { DocumentNode } from "graphql";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import type { DocumentNode } from "graphql";
+import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
 export type AnyObject = Record<string, any>;
 export type Maybe<T> = T | null;
