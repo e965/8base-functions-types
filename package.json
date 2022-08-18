@@ -11,6 +11,16 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "./common": "./dist/common.js"
+  },
+  "typesVersions": {
+    "*": {
+      "common": [
+        "dist/common.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
