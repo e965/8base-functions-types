@@ -9,18 +9,18 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-	"dist"
+    "dist"
   ],
   "scripts": {
-	"build": "tsc",
+    "build": "tsc",
     "typecheck": "tsc --noEmit",
     "postversion": "git push --follow-tags"
   },
-  "devDependencies": {
-    "typescript": "4.3.4"
-  },
   "dependencies": {
-    "@graphql-typed-document-node/core": "3.1.0",
-    "graphql": "15.3.0"
+    "@graphql-typed-document-node/core": "3.1.1",
+    "graphql": "16.6.0"
+  },
+  "devDependencies": {
+    "typescript": "4.7.4"
   }
 }
