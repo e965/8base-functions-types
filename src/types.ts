@@ -39,6 +39,9 @@ export type InvokeFunctionType = <
 export type FunctionContext = {
   api: {
     gqlRequest: GqlRequest;
+    /** @deprecated Method is not implemented */
+    request: (...args: any[]) => void;
+    url: string;
   };
   invokeFunction: InvokeFunctionType;
   workspaceId: string;
