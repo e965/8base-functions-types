@@ -72,6 +72,7 @@ typings/
 .env
 
 lib/
+dist/
 
 .DS_Store
 temp

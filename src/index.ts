@@ -1,7 +1,8 @@
-import { DocumentNode } from "graphql";
-import { TypedDocumentNode } from "@graphql-typed-document-node/core";
+import type { DocumentNode } from "graphql";
+import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
-export type AnyObject = Record<string, any>;
+import { AnyObject, Maybe } from "./helpers";
+
 export type HttpHeaders = Record<string, string | undefined>;
 
 export interface IDBObject {
@@ -9,38 +10,39 @@ export interface IDBObject {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: number;
-  createdById: string | null;
+  createdById: Maybe<string>;
 }
 
-export type GqlRequest = <
-  ResultT = AnyObject,
-  VariablesT = AnyObject
->(
+export type GqlRequest = <ResultT = AnyObject, VariablesT = AnyObject>(
   query: string | DocumentNode | TypedDocumentNode<ResultT, VariablesT>,
   variables?: VariablesT,
   options?: {
     checkPermissions?: boolean;
-    headers?: HttpHeaders
+    headers?: HttpHeaders;
   }
 ) => Promise<ResultT>;
+
+export type InvokeFunctionCallback = <
+  ResponseT extends InvokeFunctionResponse = InvokeFunctionResponse,
+  ArgsT = AnyObject
+>(
+  name: string,
+  args?: ArgsT,
+  options?: { waitForResponse: boolean; checkPermissions?: boolean }
+) => Promise<ResponseT>;
 
 export type FunctionContext = {
   api: {
     gqlRequest: GqlRequest;
+    /** @deprecated Method is not implemented */
+    request: (...args: any[]) => void;
     url: string;
   };
-  invokeFunction: <
-    ResponseT extends InvokeFunctionResponse = InvokeFunctionResponse,
-    ArgsT = AnyObject
-  >(
-    name: string,
-    args?: ArgsT,
-    options?: { waitForResponse: boolean; checkPermissions?: boolean }
-  ) => Promise<ResponseT>;
+  invokeFunction: InvokeFunctionCallback;
   workspaceId: string;
   environmentId: string;
   environmentName: string;
-  userId?: string | null;
+  userId?: Maybe<string>;
 };
 
 export type InvokeFunctionResponse<ResultT = any> = {
@@ -49,10 +51,7 @@ export type InvokeFunctionResponse<ResultT = any> = {
   error?: string;
 };
 
-export type FunctionEvent<
-  DataT = AnyObject,
-  ExtendObjectT = AnyObject
-> = {
+export type FunctionEvent<DataT = AnyObject, ExtendObjectT = AnyObject> = {
   data: DataT;
   body: string;
   headers: HttpHeaders;
@@ -64,10 +63,7 @@ export type FunctionResponse<
   ErrorT = AnyObject
 > = Promise<(FunctionResponseObject<DataT, ErrorT> & ExtendObjectT) | void>;
 
-export type FunctionResponseObject<
-  DataT = AnyObject,
-  ErrorT = AnyObject
-> = {
+export type FunctionResponseObject<DataT = AnyObject, ErrorT = AnyObject> = {
   data?: DataT;
   errors?: ErrorT[];
 };
@@ -135,6 +131,7 @@ export type AfterDeleteTriggerFunctionEvent<
   ExtendObjectT = AnyObject
 > = {
   data: DataT & IDBObject;
+  originalData: OriginalDataT;
   originalObject: OriginalObjectT & IDBObject;
   headers: HttpHeaders;
 } & ExtendObjectT;
@@ -150,3 +147,17 @@ export type WebhookResponse = {
   headers?: HttpHeaders;
   body?: string;
 };
+
+/** The most common case for resolver functions  */
+
+export type ResolverFunction<EventData = {}, ResultData = {}> = (
+  event: FunctionEvent<EventData>,
+  ctx: FunctionContext
+) => Promise<FunctionResponse<ResultData>>;
+
+/** The most common case for webhook functions  */
+
+export type WebhookFunction<EventData = {}> = (
+  event: FunctionEvent<EventData>,
+  ctx: FunctionContext
+) => Promise<FunctionResponse<WebhookResponse>>;
