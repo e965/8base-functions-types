@@ -1,7 +1,7 @@
 import type { DocumentNode } from "graphql";
 import type { TypedDocumentNode } from "@graphql-typed-document-node/core";
 
-import { AnyObject, Maybe } from "./helpers";
+import type { AnyObject, Maybe } from "./helpers";
 
 export type HttpHeaders = Record<string, string | undefined>;
 
