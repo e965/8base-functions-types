@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "diagnostics": false,
+    "diagnostics": true,
     "declaration": true,
     "declarationMap": true,
     "module": "ES6",

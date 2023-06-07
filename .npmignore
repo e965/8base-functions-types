@@ -1,2 +1,2 @@
-yarn.lock
-*.tgz
+/src
+tsconfig.json
