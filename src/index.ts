@@ -124,12 +124,10 @@ export type AfterUpdateTriggerFunctionEvent<
 
 export type AfterDeleteTriggerFunctionEvent<
   DataT = AnyObject,
-  OriginalDataT = AnyObject,
   OriginalObjectT = AnyObject,
   ExtendObjectT = AnyObject
 > = {
   data: DataT & IDBObject;
-  originalData: OriginalDataT;
   originalObject: OriginalObjectT & IDBObject;
   headers: HttpHeaders;
 } & ExtendObjectT;
@@ -155,7 +153,7 @@ export type ResolverFunction<EventData = {}, ResultData = {}> = (
 
 /** The most common case for webhook functions  */
 
-export type WebhookFunction<EventData = {}> = (
-  event: FunctionEvent<EventData>,
+export type WebhookFunction<EventData extends string = string> = (
+  event: WebhookFunctionEvent<EventData>,
   ctx: FunctionContext
 ) => Promise<FunctionResponse<WebhookResponse>>;
