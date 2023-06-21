@@ -52,7 +52,7 @@ export type FunctionResponseObject<DataT = AnyObject, ErrorT = AnyObject> = {
   errors?: ErrorT[];
 };
 
-export type ResolverEvent<DataT = AnyObject> = {
+export type ResolverFunctionEvent<DataT = AnyObject> = {
   data: DataT;
   headers: StringMap;
 };
@@ -62,7 +62,7 @@ export type ResolverResponse<
   ErrorT = AnyObject
 > = Promise<FunctionResponseObject<DataT, ErrorT> | void>;
 
-export type TaskEvent<ArgsT = AnyObject> = ArgsT;
+export type TaskFunctionEvent<ArgsT = AnyObject> = ArgsT;
 
 export type TaskResponse<ResponseT = any> = Promise<ResponseT>;
 
@@ -73,6 +73,11 @@ export type BeforeCreateTriggerFunctionEvent<
   data: DataT;
   headers: StringMap;
 } & ExtendObjectT;
+
+export type BeforeCreateTriggerResponse<
+  DataT = AnyObject,
+  ErrorT = AnyObject
+> = Promise<FunctionResponseObject<DataT, ErrorT> | void>;
 
 export type BeforeUpdateTriggerFunctionEvent<
   DataT = AnyObject,
@@ -88,6 +93,11 @@ export type BeforeUpdateTriggerFunctionEvent<
   headers: StringMap;
 } & ExtendObjectT;
 
+export type BeforeUpdateTriggerResponse<
+  DataT = AnyObject,
+  ErrorT = AnyObject
+> = Promise<FunctionResponseObject<DataT, ErrorT> | void>;
+
 export type BeforeDeleteTriggerFunctionEvent<
   OriginalObjectT = AnyObject,
   FilterT = AnyObject,
@@ -100,6 +110,11 @@ export type BeforeDeleteTriggerFunctionEvent<
   headers: StringMap;
 } & ExtendObjectT;
 
+export type BeforeDeleteTriggerResponse<
+  DataT = AnyObject,
+  ErrorT = AnyObject
+> = Promise<FunctionResponseObject<DataT, ErrorT> | void>;
+
 export type AfterCreateTriggerFunctionEvent<
   DataT = AnyObject,
   OriginalDataT = AnyObject,
@@ -109,6 +124,9 @@ export type AfterCreateTriggerFunctionEvent<
   originalData: OriginalDataT;
   headers: StringMap;
 } & ExtendObjectT;
+
+export type AfterCreateTriggerResponse<DataT = AnyObject> =
+  Promise<FunctionResponseObject<DataT, never> | void>;
 
 export type AfterUpdateTriggerFunctionEvent<
   DataT = AnyObject,
@@ -122,6 +140,9 @@ export type AfterUpdateTriggerFunctionEvent<
   headers: StringMap;
 } & ExtendObjectT;
 
+export type AfterUpdateTriggerResponse<DataT = AnyObject> =
+  Promise<FunctionResponseObject<DataT, never> | void>;
+
 export type AfterDeleteTriggerFunctionEvent<
   DataT = AnyObject,
   OriginalObjectT = AnyObject,
@@ -132,10 +153,7 @@ export type AfterDeleteTriggerFunctionEvent<
   headers: StringMap;
 } & ExtendObjectT;
 
-export type TriggerResponse<
-  DataT = AnyObject,
-  ErrorT = AnyObject
-> = Promise<FunctionResponseObject<DataT, ErrorT> | void>;
+export type AfterDeleteTriggerResponse = Promise<void>;
 
 export type WebhookFunctionEvent<
   DataT extends StringMap = StringMap,
@@ -158,12 +176,12 @@ export type ResolverFunction<
   ResultData = AnyObject,
   ResultError = AnyObject
 > = (
-  event: ResolverEvent<EventData>,
+  event: ResolverFunctionEvent<EventData>,
   ctx: FunctionContext
 ) => ResolverResponse<ResultData, ResultError>;
 
 export type TaskFunction<EventArgs = AnyObject, ResultResponse = any> = (
-  event: TaskEvent<EventArgs>,
+  event: TaskFunctionEvent<EventArgs>,
   ctx: FunctionContext
 ) => TaskResponse<ResultResponse>;
 
@@ -174,7 +192,7 @@ export type BeforeCreateTriggerFunction<
 > = (
   event: BeforeCreateTriggerFunctionEvent<EventData>,
   ctx: FunctionContext
-) => TriggerResponse<ResultData, ResultError>;
+) => BeforeCreateTriggerResponse<ResultData, ResultError>;
 
 export type BeforeUpdateTriggerFunction<
   EventData = AnyObject,
@@ -184,7 +202,7 @@ export type BeforeUpdateTriggerFunction<
 > = (
   event: BeforeUpdateTriggerFunctionEvent<EventData, EventOriginalObject>,
   ctx: FunctionContext
-) => TriggerResponse<ResultData, ResultError>;
+) => BeforeUpdateTriggerResponse<ResultData, ResultError>;
 
 export type BeforeDeleteTriggerFunction<
   EventOriginalObject = AnyObject,
@@ -193,7 +211,7 @@ export type BeforeDeleteTriggerFunction<
 > = (
   event: BeforeDeleteTriggerFunctionEvent<EventOriginalObject>,
   ctx: FunctionContext
-) => TriggerResponse<ResultData, ResultError>;
+) => BeforeDeleteTriggerResponse<ResultData, ResultError>;
 
 export type AfterCreateTriggerFunction<
   EventData = AnyObject,
@@ -202,7 +220,7 @@ export type AfterCreateTriggerFunction<
 > = (
   event: AfterCreateTriggerFunctionEvent<EventData, EventOriginalData>,
   ctx: FunctionContext
-) => TriggerResponse<ResultData, never>;
+) => AfterCreateTriggerResponse<ResultData>;
 
 export type AfterUpdateTriggerFunction<
   EventData = AnyObject,
@@ -216,7 +234,7 @@ export type AfterUpdateTriggerFunction<
     EventOriginalObject
   >,
   ctx: FunctionContext
-) => TriggerResponse<ResultData, never>;
+) => AfterUpdateTriggerResponse<ResultData>;
 
 export type AfterDeleteTriggerFunction<
   EventData = AnyObject,
@@ -224,7 +242,7 @@ export type AfterDeleteTriggerFunction<
 > = (
   event: AfterDeleteTriggerFunctionEvent<EventData, EventOriginalObject>,
   ctx: FunctionContext
-) => Promise<void>;
+) => AfterDeleteTriggerResponse;
 
 export type WebhookFunction<
   EventData extends StringMap = StringMap,
