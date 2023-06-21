@@ -66,7 +66,7 @@ export type ResolverResponse<
 
 export type TaskEvent<ArgsT = AnyObject> = ArgsT;
 
-export type TaskResponse = Promise<void>;
+export type TaskResponse<ResponseT = AnyObject> = Promise<ResponseT>;
 
 export type BeforeCreateTriggerFunctionEvent<
   DataT = AnyObject,
@@ -159,12 +159,12 @@ export type ResolverFunction<
 > = (
   event: ResolverEvent<EventData>,
   ctx: FunctionContext
-) => Promise<ResolverResponse<ResultData, ResultError>>;
+) => ResolverResponse<ResultData, ResultError>;
 
-export type TaskFunction<EventArgs = AnyObject> = (
+export type TaskFunction<EventArgs = AnyObject, ResultResponse = AnyObject> = (
   event: TaskEvent<EventArgs>,
   ctx: FunctionContext
-) => TaskResponse;
+) => TaskResponse<ResultResponse>;
 
 export type BeforeCreateTriggerFunction<
   EventData = AnyObject,
