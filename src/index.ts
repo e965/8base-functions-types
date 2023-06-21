@@ -52,6 +52,10 @@ export type FunctionResponseObject<DataT = AnyObject, ErrorT = AnyObject> = {
   errors?: ErrorT[];
 };
 
+export type FunctionResponseObjectWithoutErrors<DataT = AnyObject> = {
+  data: DataT;
+};
+
 export type ResolverFunctionEvent<DataT = AnyObject> = {
   data: DataT;
   headers: StringMap;
@@ -126,7 +130,7 @@ export type AfterCreateTriggerFunctionEvent<
 } & ExtendObjectT;
 
 export type AfterCreateTriggerResponse<DataT = AnyObject> =
-  Promise<FunctionResponseObject<DataT, never> | void>;
+  Promise<FunctionResponseObjectWithoutErrors<DataT> | void>;
 
 export type AfterUpdateTriggerFunctionEvent<
   DataT = AnyObject,
@@ -141,7 +145,7 @@ export type AfterUpdateTriggerFunctionEvent<
 } & ExtendObjectT;
 
 export type AfterUpdateTriggerResponse<DataT = AnyObject> =
-  Promise<FunctionResponseObject<DataT, never> | void>;
+  Promise<FunctionResponseObjectWithoutErrors<DataT> | void>;
 
 export type AfterDeleteTriggerFunctionEvent<
   DataT = AnyObject,
